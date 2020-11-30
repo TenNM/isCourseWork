@@ -29,6 +29,7 @@ namespace isCourseWork
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
+            dataGridView1.MultiSelect = false;
 
             dataGridView1.Columns.Add("Adapter name", "Adapter name");
             dataGridView1.Columns.Add("Inited", "Inited");
@@ -38,17 +39,42 @@ namespace isCourseWork
             dataGridView1.Rows.Add(arr);          
         }
         //-------------------------------------------------------------------------------------
-        internal void AddAdapterInAllPlaces(string adpterName, string api, string secret, string password)
+        internal bool CellOfFirstColumnSelected()//???????????
         {
-            adapter_Aggregator.AddAdapter(adpterName, api, secret);//1
+            if (dataGridView1.SelectedCells.Count != 1) return false;
+            string selectedCellVal = dataGridView1.SelectedCells[0].Value.ToString();
+            foreach(string s in Adapter.GetSupportedAdapters())
+            {
+                if (selectedCellVal.Equals(s)) return true;
+            }
+            return false;
+        }
+        //--------------------------------------------------
+        internal void AddAdapterInAllPlaces(string adapterName, string api, string secret, string password)
+        {
+            adapter_Aggregator.AddAdapter(adapterName, api, secret);//1
             adapter_Aggregator.AddOrRewriteKeySet(//2
-                adpterName,
+                adapterName,
                 Сryptography.EncryptStringToBytes_Aes(api, Сryptography.PassToByte16Arr(password)),
                 Сryptography.EncryptStringToBytes_Aes(secret, Сryptography.PassToByte16Arr(password))
                 );
-            checkedListBoxAdapters.Items.Add(adpterName);//3
+            checkedListBoxAdapters.Items.Add(adapterName);//3
 
-            dataGridView1.Rows.Add(adpterName, false);//4
+            dataGridView1.Rows.Add(adapterName, false);//4
+        }
+        internal void DelAdapterInAllPlaces(string adapterName)
+        {
+            adapter_Aggregator.DelAdapter(adapterName);//1
+            adapter_Aggregator.DelKeySet(adapterName);//2
+            checkedListBoxAdapters.Items.Remove(adapterName);//3
+            foreach (DataGridViewRow row in dataGridView1.Rows)//4
+            {
+                if (row.Cells[0].Value.ToString().Equals(adapterName))
+                {
+                    dataGridView1.Rows.Remove(row);
+                    break;
+                }
+            }
         }
         //----------------------------------------------------------------------------
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -75,32 +101,21 @@ namespace isCourseWork
             }
         }
         //--------
-        private void buttonSetPass_Click(object sender, EventArgs e)
+        private void buttonSetPassAndName_Click(object sender, EventArgs e)
         {
 
         }
         private void buttonAddAdapter_Click(object sender, EventArgs e)
         {
+            if (!CellOfFirstColumnSelected()) return;
             FormAddKeySet formAddKeySet = new FormAddKeySet();
             formAddKeySet.Owner = this;
             formAddKeySet.ShowDialog();
         }
         private void buttonDelAdapter_Click(object sender, EventArgs e)
         {
-            if (
-                dataGridView1.SelectedCells.Count.Equals(1) && 
-                dataGridView1.SelectedCells[0].ColumnIndex.Equals(0)
-                )
-            {
-                string name = dataGridView1.SelectedCells[0].Value.ToString();
-                bool isAdapterDeleted = adapter_Aggregator.DelAdapter(name);
-                bool isKeySetDeleted = adapter_Aggregator.DelKeySet(name);
-                checkedListBoxAdapters.Items.Remove(name);
-                MessageBox.Show(
-                    "Adapter deleted:" + isAdapterDeleted + '\n' +
-                    "KeySet  deleted:" + isKeySetDeleted
-                    );
-            }
+            if (!dataGridView1.SelectedCells[0].ColumnIndex.Equals(0)){ return; }
+            DelAdapterInAllPlaces( dataGridView1.SelectedCells[0].Value.ToString() );
         }     
         private void buttonInitAll_Click(object sender, EventArgs e)
         {

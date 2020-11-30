@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -45,7 +45,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.buttonCheckConnAll = new System.Windows.Forms.Button();
             this.checkedListBoxAssets = new System.Windows.Forms.CheckedListBox();
-            this.buttonSetPass = new System.Windows.Forms.Button();
+            this.buttonSetPassAndName = new System.Windows.Forms.Button();
             this.labelAdapters = new System.Windows.Forms.Label();
             this.labelAssets = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -122,23 +122,23 @@
             // 
             // chart1
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(400, 380);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
             // tabPageAdapters
             // 
-            this.tabPageAdapters.Controls.Add(this.buttonSetPass);
+            this.tabPageAdapters.Controls.Add(this.buttonSetPassAndName);
             this.tabPageAdapters.Controls.Add(this.buttonCheckConnAll);
             this.tabPageAdapters.Controls.Add(this.buttonInitAll);
             this.tabPageAdapters.Controls.Add(this.buttonDelAdapter);
@@ -210,15 +210,15 @@
             this.checkedListBoxAssets.Size = new System.Drawing.Size(120, 349);
             this.checkedListBoxAssets.TabIndex = 3;
             // 
-            // buttonSetPass
+            // buttonSetPassAndName
             // 
-            this.buttonSetPass.Location = new System.Drawing.Point(578, 6);
-            this.buttonSetPass.Name = "buttonSetPass";
-            this.buttonSetPass.Size = new System.Drawing.Size(100, 100);
-            this.buttonSetPass.TabIndex = 5;
-            this.buttonSetPass.Text = "Set Pass";
-            this.buttonSetPass.UseVisualStyleBackColor = true;
-            this.buttonSetPass.Click += new System.EventHandler(this.buttonSetPass_Click);
+            this.buttonSetPassAndName.Location = new System.Drawing.Point(578, 6);
+            this.buttonSetPassAndName.Name = "buttonSetPassAndName";
+            this.buttonSetPassAndName.Size = new System.Drawing.Size(100, 100);
+            this.buttonSetPassAndName.TabIndex = 5;
+            this.buttonSetPassAndName.Text = "Set Pass and Name";
+            this.buttonSetPassAndName.UseVisualStyleBackColor = true;
+            this.buttonSetPassAndName.Click += new System.EventHandler(this.buttonSetPassAndName_Click);
             // 
             // labelAdapters
             // 
@@ -241,9 +241,9 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(680, 29);
+            this.comboBox1.Location = new System.Drawing.Point(673, 29);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(104, 28);
+            this.comboBox1.Size = new System.Drawing.Size(100, 28);
             this.comboBox1.TabIndex = 6;
             // 
             // FormMain
@@ -285,7 +285,7 @@
         private System.Windows.Forms.Button buttonInitAll;
         private System.Windows.Forms.Button buttonCheckConnAll;
         private System.Windows.Forms.CheckedListBox checkedListBoxAssets;
-        private System.Windows.Forms.Button buttonSetPass;
+        private System.Windows.Forms.Button buttonSetPassAndName;
         private System.Windows.Forms.Label labelAssets;
         private System.Windows.Forms.Label labelAdapters;
         private System.Windows.Forms.ComboBox comboBox1;

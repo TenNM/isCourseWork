@@ -36,7 +36,7 @@ namespace isCourseWork
                 comboBoxChooseAdapter.SelectedIndex != 0
                 ;
         }
-        private void buttonAddKeyForm_Click(object sender, EventArgs e)
+        /*private void buttonAddKeyForm_Click(object sender, EventArgs e)
         {
             if (isFieldsCorrect())
             {
@@ -62,6 +62,32 @@ namespace isCourseWork
                 else MessageBox.Show("Adapter already added");
             }
             else MessageBox.Show("Incorrect or empty fields");
+        }//m*/
+        private void buttonAddKeyForm_Click(object sender, EventArgs e)
+        {
+            if (!isFieldsCorrect())
+            {
+                MessageBox.Show("Incorrect or empty fields");
+                return;
+            }
+            FormMain fm = this.Owner as FormMain;
+            if (fm == null)
+            {
+                MessageBox.Show("Can't connect to main form");
+                return;
+            }
+            if (fm.adapter_Aggregator.IsAdapterAdded(comboBoxChooseAdapter.SelectedItem as string))
+            {
+                MessageBox.Show("Adapter already added");
+                return;
+            }
+            fm.AddAdapterInAllPlaces(
+                comboBoxChooseAdapter.SelectedItem as string,
+                labeledTextBoxApi.Text,
+                labeledTextBoxSecret.Text,
+                labeledTextBoxPassword.Text
+            );
+            this.Close();
         }//m
     }//c
 }//n
