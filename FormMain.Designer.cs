@@ -28,27 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPagePortfolio = new System.Windows.Forms.TabPage();
-            this.buttonDoRequest = new System.Windows.Forms.Button();
+            this.buttonCallAllServers = new System.Windows.Forms.Button();
+            this.comboBoxFilter = new System.Windows.Forms.ComboBox();
+            this.labelAssets = new System.Windows.Forms.Label();
+            this.labelAdapters = new System.Windows.Forms.Label();
+            this.checkedListBoxAssets = new System.Windows.Forms.CheckedListBox();
+            this.buttonFilter = new System.Windows.Forms.Button();
             this.checkedListBoxAdapters = new System.Windows.Forms.CheckedListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPageAdapters = new System.Windows.Forms.TabPage();
+            this.buttonSetPassAndName = new System.Windows.Forms.Button();
+            this.buttonCheckConnAll = new System.Windows.Forms.Button();
             this.buttonInitAll = new System.Windows.Forms.Button();
             this.buttonDelAdapter = new System.Windows.Forms.Button();
             this.buttonAddAdapter = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.buttonCheckConnAll = new System.Windows.Forms.Button();
-            this.checkedListBoxAssets = new System.Windows.Forms.CheckedListBox();
-            this.buttonSetPassAndName = new System.Windows.Forms.Button();
-            this.labelAdapters = new System.Windows.Forms.Label();
-            this.labelAssets = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.labelName = new System.Windows.Forms.Label();
+            this.labelPassSetted = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPagePortfolio.SuspendLayout();
@@ -65,14 +68,14 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 30);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // tabControl1
@@ -87,11 +90,12 @@
             // 
             // tabPagePortfolio
             // 
-            this.tabPagePortfolio.Controls.Add(this.comboBox1);
+            this.tabPagePortfolio.Controls.Add(this.buttonCallAllServers);
+            this.tabPagePortfolio.Controls.Add(this.comboBoxFilter);
             this.tabPagePortfolio.Controls.Add(this.labelAssets);
             this.tabPagePortfolio.Controls.Add(this.labelAdapters);
             this.tabPagePortfolio.Controls.Add(this.checkedListBoxAssets);
-            this.tabPagePortfolio.Controls.Add(this.buttonDoRequest);
+            this.tabPagePortfolio.Controls.Add(this.buttonFilter);
             this.tabPagePortfolio.Controls.Add(this.checkedListBoxAdapters);
             this.tabPagePortfolio.Controls.Add(this.chart1);
             this.tabPagePortfolio.Location = new System.Drawing.Point(4, 29);
@@ -102,15 +106,59 @@
             this.tabPagePortfolio.Text = "Portfolio";
             this.tabPagePortfolio.UseVisualStyleBackColor = true;
             // 
-            // buttonDoRequest
+            // buttonCallAllServers
             // 
-            this.buttonDoRequest.Location = new System.Drawing.Point(673, 101);
-            this.buttonDoRequest.Name = "buttonDoRequest";
-            this.buttonDoRequest.Size = new System.Drawing.Size(100, 100);
-            this.buttonDoRequest.TabIndex = 2;
-            this.buttonDoRequest.Text = "Do request";
-            this.buttonDoRequest.UseVisualStyleBackColor = true;
-            this.buttonDoRequest.Click += new System.EventHandler(this.buttonDoRequest_Click);
+            this.buttonCallAllServers.Location = new System.Drawing.Point(673, 167);
+            this.buttonCallAllServers.Name = "buttonCallAllServers";
+            this.buttonCallAllServers.Size = new System.Drawing.Size(100, 100);
+            this.buttonCallAllServers.TabIndex = 7;
+            this.buttonCallAllServers.Text = "Call to all servers";
+            this.buttonCallAllServers.UseVisualStyleBackColor = true;
+            this.buttonCallAllServers.Click += new System.EventHandler(this.buttonCallAllServers_Click);
+            // 
+            // comboBoxFilter
+            // 
+            this.comboBoxFilter.FormattingEnabled = true;
+            this.comboBoxFilter.Location = new System.Drawing.Point(673, 29);
+            this.comboBoxFilter.Name = "comboBoxFilter";
+            this.comboBoxFilter.Size = new System.Drawing.Size(100, 28);
+            this.comboBoxFilter.TabIndex = 6;
+            // 
+            // labelAssets
+            // 
+            this.labelAssets.AutoSize = true;
+            this.labelAssets.Location = new System.Drawing.Point(543, 6);
+            this.labelAssets.Name = "labelAssets";
+            this.labelAssets.Size = new System.Drawing.Size(58, 20);
+            this.labelAssets.TabIndex = 5;
+            this.labelAssets.Text = "Assets";
+            // 
+            // labelAdapters
+            // 
+            this.labelAdapters.AutoSize = true;
+            this.labelAdapters.Location = new System.Drawing.Point(417, 6);
+            this.labelAdapters.Name = "labelAdapters";
+            this.labelAdapters.Size = new System.Drawing.Size(74, 20);
+            this.labelAdapters.TabIndex = 4;
+            this.labelAdapters.Text = "Adapters";
+            // 
+            // checkedListBoxAssets
+            // 
+            this.checkedListBoxAssets.FormattingEnabled = true;
+            this.checkedListBoxAssets.Location = new System.Drawing.Point(547, 29);
+            this.checkedListBoxAssets.Name = "checkedListBoxAssets";
+            this.checkedListBoxAssets.Size = new System.Drawing.Size(120, 349);
+            this.checkedListBoxAssets.TabIndex = 3;
+            // 
+            // buttonFilter
+            // 
+            this.buttonFilter.Location = new System.Drawing.Point(673, 273);
+            this.buttonFilter.Name = "buttonFilter";
+            this.buttonFilter.Size = new System.Drawing.Size(100, 100);
+            this.buttonFilter.TabIndex = 2;
+            this.buttonFilter.Text = "Filter";
+            this.buttonFilter.UseVisualStyleBackColor = true;
+            this.buttonFilter.Click += new System.EventHandler(this.buttonFilter_Click);
             // 
             // checkedListBoxAdapters
             // 
@@ -122,16 +170,16 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(400, 380);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -151,6 +199,26 @@
             this.tabPageAdapters.TabIndex = 1;
             this.tabPageAdapters.Text = "Adapters";
             this.tabPageAdapters.UseVisualStyleBackColor = true;
+            // 
+            // buttonSetPassAndName
+            // 
+            this.buttonSetPassAndName.Location = new System.Drawing.Point(578, 6);
+            this.buttonSetPassAndName.Name = "buttonSetPassAndName";
+            this.buttonSetPassAndName.Size = new System.Drawing.Size(100, 100);
+            this.buttonSetPassAndName.TabIndex = 5;
+            this.buttonSetPassAndName.Text = "Set Pass and Name";
+            this.buttonSetPassAndName.UseVisualStyleBackColor = true;
+            this.buttonSetPassAndName.Click += new System.EventHandler(this.buttonSetPassAndName_Click);
+            // 
+            // buttonCheckConnAll
+            // 
+            this.buttonCheckConnAll.Location = new System.Drawing.Point(684, 247);
+            this.buttonCheckConnAll.Name = "buttonCheckConnAll";
+            this.buttonCheckConnAll.Size = new System.Drawing.Size(100, 100);
+            this.buttonCheckConnAll.TabIndex = 4;
+            this.buttonCheckConnAll.Text = "Check connection All";
+            this.buttonCheckConnAll.UseVisualStyleBackColor = true;
+            this.buttonCheckConnAll.Click += new System.EventHandler(this.buttonCheckConnAll_Click);
             // 
             // buttonInitAll
             // 
@@ -192,65 +260,31 @@
             this.dataGridView1.Size = new System.Drawing.Size(564, 367);
             this.dataGridView1.TabIndex = 0;
             // 
-            // buttonCheckConnAll
+            // labelName
             // 
-            this.buttonCheckConnAll.Location = new System.Drawing.Point(684, 247);
-            this.buttonCheckConnAll.Name = "buttonCheckConnAll";
-            this.buttonCheckConnAll.Size = new System.Drawing.Size(100, 100);
-            this.buttonCheckConnAll.TabIndex = 4;
-            this.buttonCheckConnAll.Text = "Check connection All";
-            this.buttonCheckConnAll.UseVisualStyleBackColor = true;
-            this.buttonCheckConnAll.Click += new System.EventHandler(this.buttonCheckConnAll_Click);
+            this.labelName.AutoSize = true;
+            this.labelName.Location = new System.Drawing.Point(142, 9);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(84, 20);
+            this.labelName.TabIndex = 2;
+            this.labelName.Text = "labelName";
             // 
-            // checkedListBoxAssets
+            // labelPassSetted
             // 
-            this.checkedListBoxAssets.FormattingEnabled = true;
-            this.checkedListBoxAssets.Location = new System.Drawing.Point(547, 29);
-            this.checkedListBoxAssets.Name = "checkedListBoxAssets";
-            this.checkedListBoxAssets.Size = new System.Drawing.Size(120, 349);
-            this.checkedListBoxAssets.TabIndex = 3;
-            // 
-            // buttonSetPassAndName
-            // 
-            this.buttonSetPassAndName.Location = new System.Drawing.Point(578, 6);
-            this.buttonSetPassAndName.Name = "buttonSetPassAndName";
-            this.buttonSetPassAndName.Size = new System.Drawing.Size(100, 100);
-            this.buttonSetPassAndName.TabIndex = 5;
-            this.buttonSetPassAndName.Text = "Set Pass and Name";
-            this.buttonSetPassAndName.UseVisualStyleBackColor = true;
-            this.buttonSetPassAndName.Click += new System.EventHandler(this.buttonSetPassAndName_Click);
-            // 
-            // labelAdapters
-            // 
-            this.labelAdapters.AutoSize = true;
-            this.labelAdapters.Location = new System.Drawing.Point(417, 6);
-            this.labelAdapters.Name = "labelAdapters";
-            this.labelAdapters.Size = new System.Drawing.Size(74, 20);
-            this.labelAdapters.TabIndex = 4;
-            this.labelAdapters.Text = "Adapters";
-            // 
-            // labelAssets
-            // 
-            this.labelAssets.AutoSize = true;
-            this.labelAssets.Location = new System.Drawing.Point(543, 6);
-            this.labelAssets.Name = "labelAssets";
-            this.labelAssets.Size = new System.Drawing.Size(58, 20);
-            this.labelAssets.TabIndex = 5;
-            this.labelAssets.Text = "Assets";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(673, 29);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(100, 28);
-            this.comboBox1.TabIndex = 6;
+            this.labelPassSetted.AutoSize = true;
+            this.labelPassSetted.Location = new System.Drawing.Point(314, 9);
+            this.labelPassSetted.Name = "labelPassSetted";
+            this.labelPassSetted.Size = new System.Drawing.Size(116, 20);
+            this.labelPassSetted.TabIndex = 3;
+            this.labelPassSetted.Text = "labelPassState";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelPassSetted);
+            this.Controls.Add(this.labelName);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -281,14 +315,17 @@
         private System.Windows.Forms.Button buttonAddAdapter;
         private System.Windows.Forms.Button buttonDelAdapter;
         internal System.Windows.Forms.CheckedListBox checkedListBoxAdapters;
-        private System.Windows.Forms.Button buttonDoRequest;
+        private System.Windows.Forms.Button buttonFilter;
         private System.Windows.Forms.Button buttonInitAll;
         private System.Windows.Forms.Button buttonCheckConnAll;
         private System.Windows.Forms.CheckedListBox checkedListBoxAssets;
         private System.Windows.Forms.Button buttonSetPassAndName;
         private System.Windows.Forms.Label labelAssets;
         private System.Windows.Forms.Label labelAdapters;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxFilter;
+        internal System.Windows.Forms.Label labelName;
+        internal System.Windows.Forms.Label labelPassSetted;
+        private System.Windows.Forms.Button buttonCallAllServers;
     }
 }
 

@@ -15,9 +15,6 @@ namespace isCourseWork
         internal List<string> fillableAssets = new List<string>();
 
         private Keys.KeyStorage _keyStorage = new Keys.KeyStorage();
-        //-------------------------------------------
-        //internal Adapter_Aggregator() { }
-        //internal Adapter_Aggregator(Keys.KeyStorage keyStorage) { _keyStorage = keyStorage; }
         //--------------------------------------------------------------------service
         internal bool IsAdapterAdded(string adapterName)
         {
@@ -35,7 +32,16 @@ namespace isCourseWork
                 ad => ad.platformName.Equals(adapterName)
                 );
         }
+        //internal List<string> GetAdapterNames
         //---------------------------------------------------------------------KeyStorage
+        internal void KeyStorageSetName(string name)
+        {
+            _keyStorage._ksName = name;
+        }
+        internal string KeyStorageGetName()
+        {
+            return _keyStorage._ksName;
+        }
         internal void SetHashedPass(byte[] hashedPass)
         {
             _keyStorage.HashedPass = hashedPass;
@@ -140,9 +146,7 @@ namespace isCourseWork
         }*/
         internal void MassInit()
         {
-            adaptersList.ForEach(
-                (Adapter ad) => { ad.Init(); }
-                );
+            adaptersList.ForEach(ad => ad.Init());
         }
         internal void MassCheckCon()
         {
@@ -152,9 +156,7 @@ namespace isCourseWork
         }
         internal void MassGetBalances() 
         {
-            adaptersList.ForEach(
-                (Adapter ad) => { ad.GetBalances(); }
-                );
+            adaptersList.ForEach( ad => ad.GetBalances() );
         }
         internal void MassGetPrices()
         {

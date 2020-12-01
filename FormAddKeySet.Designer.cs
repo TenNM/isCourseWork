@@ -74,7 +74,7 @@
             // 
             this.buttonAddKeyForm.Location = new System.Drawing.Point(283, 12);
             this.buttonAddKeyForm.Name = "buttonAddKeyForm";
-            this.buttonAddKeyForm.Size = new System.Drawing.Size(75, 28);
+            this.buttonAddKeyForm.Size = new System.Drawing.Size(128, 40);
             this.buttonAddKeyForm.TabIndex = 8;
             this.buttonAddKeyForm.Text = "Add key set";
             this.buttonAddKeyForm.UseVisualStyleBackColor = true;

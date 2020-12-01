@@ -177,20 +177,19 @@ namespace isCourseWork
             return DecryptStringFromBytes_Aes(cipherText, baseKey, baseIV);
         }
         //---------------------------------------------------------------------------
-        internal static string GetMD5(string inputStr)
+        /*internal static string GetMD5(string inputStr)
         {
             inputStr = SALT + inputStr + SALT;
             MD5 md5 = MD5.Create();
             byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(inputStr));
             return Convert.ToBase64String(hash);
-        }
-        internal static string GetSha512(string inputStr)
+        }*/
+        internal static byte[] GetSha512(string inputStr)
         {
             inputStr = SALT + inputStr + SALT;
             SHA512 shaM = new SHA512Managed();
             byte[] data = Encoding.UTF8.GetBytes(inputStr);
-            byte[] hash = shaM.ComputeHash(data);
-            return Convert.ToBase64String(hash);
+            return shaM.ComputeHash(data);
         }
         //-----------------------------------------------------------------------------
     }

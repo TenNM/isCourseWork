@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -30,29 +31,64 @@ namespace isCourseWork
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.MultiSelect = false;
-
+            //
             dataGridView1.Columns.Add("Adapter name", "Adapter name");
             dataGridView1.Columns.Add("Inited", "Inited");
             dataGridView1.Columns.Add("Connected", "Connected");
+            //
+            object[] oArr = {
+                Adapter.ASSET_TEST1,
+                Adapter.ASSET_ETH,
+                Adapter.ASSET_ETC,
+                Adapter.ASSET_BTC,
+                Adapter.ASSET_LTC
+            };
+            checkedListBoxAssets.Items.AddRange(oArr);
+            //
+            object[] filterArr = {
+                "Balance",
+                "Price",
+                "Worth"             
+            };
+            comboBoxFilter.Items.AddRange(filterArr);
+            comboBoxFilter.SelectedIndex = 0;
+            //
+            StatePass(false);
+        }
+        //
+        internal void StatePass(bool isSetted)
+        {
+            if (!isSetted)
+            {
+                labelName.Text = "Name unsetted";
+                labelPassSetted.Text = "Pass unsetted";
+            }
 
-            object[] arr = { "one", "two", "thr"};
-            dataGridView1.Rows.Add(arr);          
+            buttonFilter.Enabled = isSetted;
+
+            buttonAddAdapter.Enabled = isSetted;
+            buttonDelAdapter.Enabled = isSetted;
+            buttonInitAll.Enabled = isSetted;
+            buttonCheckConnAll.Enabled = isSetted;
         }
         //-------------------------------------------------------------------------------------
-        internal bool CellOfFirstColumnSelected()//???????????
+        internal bool CellOfFirstColumnSelectedOrNothing()
         {
-            if (dataGridView1.SelectedCells.Count != 1) return false;
+            /*if (dataGridView1.SelectedCells.Count != 1) return false;
             string selectedCellVal = dataGridView1.SelectedCells[0].Value.ToString();
             foreach(string s in Adapter.GetSupportedAdapters())
             {
                 if (selectedCellVal.Equals(s)) return true;
             }
-            return false;
+            return false;*/
+            return (dataGridView1.SelectedCells.Count).Equals(0)
+                || (dataGridView1.SelectedCells[0].ColumnIndex.Equals(0));
         }
         //--------------------------------------------------
         internal void AddAdapterInAllPlaces(string adapterName, string api, string secret, string password)
         {
             adapter_Aggregator.AddAdapter(adapterName, api, secret);//1
+            bool bInited = adapter_Aggregator.Init(adapterName);
             adapter_Aggregator.AddOrRewriteKeySet(//2
                 adapterName,
                 Сryptography.EncryptStringToBytes_Aes(api, Сryptography.PassToByte16Arr(password)),
@@ -60,7 +96,7 @@ namespace isCourseWork
                 );
             checkedListBoxAdapters.Items.Add(adapterName);//3
 
-            dataGridView1.Rows.Add(adapterName, false);//4
+            dataGridView1.Rows.Add(adapterName, bInited, false);//4
         }
         internal void DelAdapterInAllPlaces(string adapterName)
         {
@@ -82,20 +118,39 @@ namespace isCourseWork
             adapter_Aggregator.Dispose();
         }
         //---------------------------------------------------------------------------------buttons
-        private void buttonDoRequest_Click(object sender, EventArgs e)
+        private void buttonCallAllServers_Click(object sender, EventArgs e)
         {
-            List<string> adapters = new List<string> { Adapter.NAME_TEST };
-            List<string> assets = new List<string> { "TEST1", "TEST2" };
+            buttonCallAllServers.Enabled = false;
+            buttonFilter.Enabled = false;
+
             adapter_Aggregator.MassGetBalances();
+            adapter_Aggregator.MassGetPrices();
+            adapter_Aggregator.MassCalcPortfolio();
+
+            buttonCallAllServers.Enabled = true;
+            buttonFilter.Enabled = true;
+        }
+        private void buttonFilter_Click(object sender, EventArgs e)
+        {
+            decimal numData = 0;
+            List<string> adapters = checkedListBoxAdapters.CheckedItems.Cast<string>().ToList();
+            List<string> assets = checkedListBoxAssets.CheckedItems.Cast<string>().ToList();
             var dictionary = adapter_Aggregator.RequestEngine(assets, adapters);
             chart1.Series[0].Points.Clear();
             foreach (var entry in dictionary)
             {
                 foreach (var asset in entry.Value)
                 {
+                    switch (comboBoxFilter.SelectedItem)
+                    {
+                        case "Balance": numData = asset.TotalAssetBalance; break;
+                        case "Price": numData = asset.Price; break;
+                        case "Worth": numData = asset.Worth; break;
+                    }
                     chart1.Series[0].Points.AddXY(
-                        entry.Key + " " + asset.Asset,
-                        asset.TotalAssetBalance
+                        entry.Key + '\n' + asset.Asset + '\n' + numData,
+                        //asset.TotalAssetBalance
+                        numData
                         );
                 }
             }
@@ -103,18 +158,20 @@ namespace isCourseWork
         //--------
         private void buttonSetPassAndName_Click(object sender, EventArgs e)
         {
-
+            FormSetPassAndName f = new FormSetPassAndName();
+            f.Owner = this;
+            f.ShowDialog();
         }
         private void buttonAddAdapter_Click(object sender, EventArgs e)
         {
-            if (!CellOfFirstColumnSelected()) return;
+            if (!CellOfFirstColumnSelectedOrNothing()) return;
             FormAddKeySet formAddKeySet = new FormAddKeySet();
             formAddKeySet.Owner = this;
             formAddKeySet.ShowDialog();
         }
         private void buttonDelAdapter_Click(object sender, EventArgs e)
         {
-            if (!dataGridView1.SelectedCells[0].ColumnIndex.Equals(0)){ return; }
+            if (!CellOfFirstColumnSelectedOrNothing()) return;
             DelAdapterInAllPlaces( dataGridView1.SelectedCells[0].Value.ToString() );
         }     
         private void buttonInitAll_Click(object sender, EventArgs e)
@@ -141,7 +198,6 @@ namespace isCourseWork
                 }
             }
         }
-    
         //------------------------------------------------------------------------------------end
     }//c
 }//n

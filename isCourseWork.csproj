@@ -159,6 +159,12 @@
     <Compile Include="FormAddKeySet.Designer.cs">
       <DependentUpon>FormAddKeySet.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSetPassAndName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetPassAndName.Designer.cs">
+      <DependentUpon>FormSetPassAndName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Keys\KeyStorage.cs" />
     <Compile Include="Keys\OneKeySet.cs" />
     <Compile Include="Program.cs" />
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddKeySet.resx">
       <DependentUpon>FormAddKeySet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetPassAndName.resx">
+      <DependentUpon>FormSetPassAndName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

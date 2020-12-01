@@ -36,33 +36,6 @@ namespace isCourseWork
                 comboBoxChooseAdapter.SelectedIndex != 0
                 ;
         }
-        /*private void buttonAddKeyForm_Click(object sender, EventArgs e)
-        {
-            if (isFieldsCorrect())
-            {
-                FormMain fm = this.Owner as FormMain;
-                if (!fm.adapter_Aggregator.IsAdapterAdded(comboBoxChooseAdapter.SelectedItem as string)) {
-                    if (fm != null)
-                    {
-                        fm.adapter_Aggregator.AddAdapter(
-                            comboBoxChooseAdapter.SelectedItem as string,
-                            labeledTextBoxApi.Text,
-                            labeledTextBoxSecret.Text
-                            );
-                        //add keyset
-                        fm.checkedListBoxAdapters.Items.Add(comboBoxChooseAdapter.SelectedItem as string);
-
-                        object[] arr = { comboBoxChooseAdapter.SelectedItem, false };
-                        fm.dataGridView1.Rows.Add(arr);
-
-                        this.Close();
-                    }
-                    else MessageBox.Show("Can't connect to main form");
-                }
-                else MessageBox.Show("Adapter already added");
-            }
-            else MessageBox.Show("Incorrect or empty fields");
-        }//m*/
         private void buttonAddKeyForm_Click(object sender, EventArgs e)
         {
             if (!isFieldsCorrect())
@@ -79,6 +52,14 @@ namespace isCourseWork
             if (fm.adapter_Aggregator.IsAdapterAdded(comboBoxChooseAdapter.SelectedItem as string))
             {
                 MessageBox.Show("Adapter already added");
+                return;
+            }
+            if (!fm.adapter_Aggregator.IsPassHashRight( Сryptography.GetSha512(labeledTextBoxPassword.Text) ))
+            {
+                MessageBox.Show("Password do not match");
+                this.buttonAddKeyForm.Enabled = false;
+                System.Threading.Thread.Sleep(1000);//yes, block of thread. Hack for hackers.
+                this.buttonAddKeyForm.Enabled = true;
                 return;
             }
             fm.AddAdapterInAllPlaces(

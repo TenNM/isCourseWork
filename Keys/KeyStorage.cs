@@ -18,7 +18,7 @@ namespace isCourseWork.Keys
         //-----------------------------------------------------------------------
         internal bool IsPassHashRight(byte[] hashedPassToCheck)
         {
-            return hashedPassToCheck.Equals(_hashedPass);
+            return hashedPassToCheck.SequenceEqual(_hashedPass);
         }
         //-------------------------------------------------------------------
         internal void AddOrRewriteKeySet(string platformName, byte[] apiEncoded, byte[] secretEncoded)
