@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace isCourseWork
@@ -23,7 +24,10 @@ namespace isCourseWork
             {
                 binFormatter.Serialize(fs, saveableObj);
             }
-            catch { throw new System.Exception(SAVE_ERR); }
+            catch(Exception e) { //throw new System.Exception(SAVE_ERR);
+                var v = e.Message;
+                int i = 0;
+            }
         }
         //--------------------------------------------------------------------------
         internal static void load<T>(ref T loadableObj, string path) where T : class

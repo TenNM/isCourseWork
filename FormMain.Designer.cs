@@ -33,6 +33,8 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPagePortfolio = new System.Windows.Forms.TabPage();
             this.buttonCallAllServers = new System.Windows.Forms.Button();
@@ -52,6 +54,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelName = new System.Windows.Forms.Label();
             this.labelPassSetted = new System.Windows.Forms.Label();
+            this.buttonDecodeKeySet = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPagePortfolio.SuspendLayout();
@@ -68,15 +71,32 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 36);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileToolStripMenuItem,
+            this.saveAsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 32);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(186, 34);
+            this.openFileToolStripMenuItem.Text = "Open file";
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(186, 34);
+            this.saveAsToolStripMenuItem.Text = "Save as";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -186,6 +206,7 @@
             // 
             // tabPageAdapters
             // 
+            this.tabPageAdapters.Controls.Add(this.buttonDecodeKeySet);
             this.tabPageAdapters.Controls.Add(this.buttonSetPassAndName);
             this.tabPageAdapters.Controls.Add(this.buttonCheckConnAll);
             this.tabPageAdapters.Controls.Add(this.buttonInitAll);
@@ -278,6 +299,16 @@
             this.labelPassSetted.TabIndex = 3;
             this.labelPassSetted.Text = "labelPassState";
             // 
+            // buttonDecodeKeySet
+            // 
+            this.buttonDecodeKeySet.Location = new System.Drawing.Point(684, 6);
+            this.buttonDecodeKeySet.Name = "buttonDecodeKeySet";
+            this.buttonDecodeKeySet.Size = new System.Drawing.Size(100, 100);
+            this.buttonDecodeKeySet.TabIndex = 6;
+            this.buttonDecodeKeySet.Text = "Decode KeySet";
+            this.buttonDecodeKeySet.UseVisualStyleBackColor = true;
+            this.buttonDecodeKeySet.Click += new System.EventHandler(this.buttonDecodeKeySet_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -326,6 +357,9 @@
         internal System.Windows.Forms.Label labelName;
         internal System.Windows.Forms.Label labelPassSetted;
         private System.Windows.Forms.Button buttonCallAllServers;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.Button buttonDecodeKeySet;
     }
 }
 

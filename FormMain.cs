@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +65,7 @@ namespace isCourseWork
                 labelPassSetted.Text = "Pass unsetted";
             }
 
+            buttonCallAllServers.Enabled = isSetted;
             buttonFilter.Enabled = isSetted;
 
             buttonAddAdapter.Enabled = isSetted;
@@ -85,14 +87,14 @@ namespace isCourseWork
                 || (dataGridView1.SelectedCells[0].ColumnIndex.Equals(0));
         }
         //--------------------------------------------------
-        internal void AddAdapterInAllPlaces(string adapterName, string api, string secret, string password)
+        internal void AddAdapterInAllPlaces(string adapterName, string api, string secret, string passwordORIGINAL)
         {
             adapter_Aggregator.AddAdapter(adapterName, api, secret);//1
             bool bInited = adapter_Aggregator.Init(adapterName);
             adapter_Aggregator.AddOrRewriteKeySet(//2
                 adapterName,
-                Сryptography.EncryptStringToBytes_Aes(api, Сryptography.PassToByte16Arr(password)),
-                Сryptography.EncryptStringToBytes_Aes(secret, Сryptography.PassToByte16Arr(password))
+                Сryptography.EncryptStringToBytes_Aes(api, Сryptography.PassToByte16Arr(passwordORIGINAL)),
+                Сryptography.EncryptStringToBytes_Aes(secret, Сryptography.PassToByte16Arr(passwordORIGINAL))
                 );
             checkedListBoxAdapters.Items.Add(adapterName);//3
 
@@ -112,6 +114,13 @@ namespace isCourseWork
                 }
             }
         }
+        internal void Del_ALL_AdaptersInAllPlaces()
+        {
+            adapter_Aggregator.Del_ALL_Adapters();//1
+            //2
+            checkedListBoxAdapters.Items.Clear();//3
+            dataGridView1.Rows.Clear();//4
+        }
         //----------------------------------------------------------------------------
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -130,7 +139,7 @@ namespace isCourseWork
             buttonCallAllServers.Enabled = true;
             buttonFilter.Enabled = true;
         }
-        private void buttonFilter_Click(object sender, EventArgs e)
+        /*private void buttonFilter_Click(object sender, EventArgs e)
         {
             decimal numData = 0;
             List<string> adapters = checkedListBoxAdapters.CheckedItems.Cast<string>().ToList();
@@ -154,11 +163,45 @@ namespace isCourseWork
                         );
                 }
             }
-        }
+        }*/
+        private void buttonFilter_Click(object sender, EventArgs e)
+        {
+            decimal numData = 0;
+            chart1.Series[0].Points.Clear();
+
+            foreach (var adapterChecked in checkedListBoxAdapters.CheckedItems)
+            {
+                Adapter findedAd = adapter_Aggregator.FindAdapter(adapterChecked.ToString());
+                if (null == findedAd) continue;
+
+                foreach (var assetChecked in checkedListBoxAssets.CheckedItems)
+                {
+                    DataOneAsset findedAsset = findedAd.assetList.Find(a => a.Asset.Equals(assetChecked.ToString()));
+                    if (null == findedAsset) continue;
+
+                    switch (comboBoxFilter.SelectedItem)
+                    {
+                        case "Balance": numData = findedAsset.TotalAssetBalance; break;
+                        case "Price": numData = findedAsset.Price; break;
+                        case "Worth": numData = findedAsset.Worth; break;
+                    }
+                    chart1.Series[0].Points.AddXY(
+                        findedAd.platformName + '\n' + findedAsset.Asset + '\n' + numData,
+                        numData
+                        );
+                }
+            }
+        }//m
         //--------
         private void buttonSetPassAndName_Click(object sender, EventArgs e)
         {
             FormSetPassAndName f = new FormSetPassAndName();
+            f.Owner = this;
+            f.ShowDialog();
+        }
+        private void buttonDecodeKeySet_Click(object sender, EventArgs e)
+        {
+            FormKeySetDecode f = new FormKeySetDecode();
             f.Owner = this;
             f.ShowDialog();
         }
@@ -198,6 +241,55 @@ namespace isCourseWork
                 }
             }
         }
+        //--------------------------------------------------------------------------menu
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Stream stream;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            Keys.KeyStorage loadedKeyStorage = null;
+
+            openFileDialog.Filter = "bin files (*.bin)|*.bin";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK) //{ return; }
+            {
+                //string filePath = openFileDialog1.FileName;
+                if ((stream = openFileDialog.OpenFile()) != null)
+                {
+                    // Code to write the stream goes here.
+                    //FileIOSerializer.loadMk2(ref treeNode, myStream);
+                    FileIOSerializer.load(ref loadedKeyStorage, stream);
+                    adapter_Aggregator.KeyStorage = loadedKeyStorage;
+
+                    labelName.Text = "Name " + loadedKeyStorage._ksName;
+                    labelPassSetted.Text = "Pass setted from file";
+
+                    stream.Close();
+                }
+            }
+        }//m
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Stream stream;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "bin files (*.bin)|*.bin";
+            //saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK) //{ return; }
+            {
+                if ((stream = saveFileDialog.OpenFile()) != null)
+                {
+                    // Code to write the stream goes here.
+                    //FileIOSerializer.save(adapter_Aggregator.ke, myStream);
+                    adapter_Aggregator.SaveKeyStorageToFile(stream);
+                    stream.Close();
+                }
+            }
+        }
+
         //------------------------------------------------------------------------------------end
     }//c
 }//n

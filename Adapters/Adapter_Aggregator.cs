@@ -9,26 +9,28 @@ namespace isCourseWork
 {
     internal class Adapter_Aggregator : IDisposable
     {
-        private List<Adapter> adaptersList = new List<Adapter>();
+        private List<Adapter> _adaptersList = new List<Adapter>();
 
-        internal List<string> fillablePlatforms = new List<string>();
-        internal List<string> fillableAssets = new List<string>();
+        //internal List<string> fillablePlatforms = new List<string>();
+        //internal List<string> fillableAssets = new List<string>();
 
         private Keys.KeyStorage _keyStorage = new Keys.KeyStorage();
+        internal Keys.KeyStorage KeyStorage
+        {
+            set { _keyStorage = value; }
+        }
         //--------------------------------------------------------------------service
         internal bool IsAdapterAdded(string adapterName)
         {
-            if (
-                adaptersList.Any(
-                //(Adapter ad) => ad.platformName.Equals(Enum.GetName(typeof(Adapter.supportedAdapters), adapterEnum))
-                (Adapter ad) => ad.platformName.Equals(adapterName)
-                )
+            /*if (
+                _adaptersList.Any(ad => ad.platformName.Equals(adapterName))
             ) return true;
-            return false;
+            return false;*/
+            return _adaptersList.Any( ad => ad.platformName.Equals(adapterName) );
         }
         internal Adapter FindAdapter(string adapterName)
         {
-            return adaptersList.Find(
+            return _adaptersList.Find(
                 ad => ad.platformName.Equals(adapterName)
                 );
         }
@@ -58,6 +60,11 @@ namespace isCourseWork
         {
             return _keyStorage.DelKeySet(platformName);
         }
+        internal void AllPlacesFillFromKS(string passwordORIGINAL, System.Windows.Forms.Form owner)
+        {
+            _keyStorage.AllPlacesFillFromKS(passwordORIGINAL, owner);
+        }
+        //------------------------------------------------------------file IO
         internal void LoadKeyStorageFrFile(Stream stream)
         {
             FileIOSerializer.load(ref _keyStorage, stream);
@@ -70,16 +77,16 @@ namespace isCourseWork
         internal bool AddAdapter(string adapterName, string pKey, string sKey)
         {
             if (
-                !adaptersList.Any(//do not forget ! (negate)
+                !_adaptersList.Any(//do not forget ! (negate)
                 (Adapter ad) => ad.platformName.Equals(adapterName)
                 )
             )
             {
                 switch (adapterName)
                 {
-                    case Adapter.NAME_TEST: adaptersList.Add(new AdapterTest(pKey, sKey)); break;
-                    case Adapter.NAME_BINANCE: adaptersList.Add(new AdapterBinance(pKey, sKey)); break;
-                    case Adapter.NAME_ETHERSCAN: adaptersList.Add(new AdapterEtherscan(pKey, sKey)); break;
+                    case Adapter.NAME_TEST: _adaptersList.Add(new AdapterTest(pKey, sKey)); break;
+                    case Adapter.NAME_BINANCE: _adaptersList.Add(new AdapterBinance(pKey, sKey)); break;
+                    case Adapter.NAME_ETHERSCAN: _adaptersList.Add(new AdapterEtherscan(pKey, sKey)); break;
                     default: return false;
                 }
                 return true;
@@ -92,9 +99,20 @@ namespace isCourseWork
             if (a != null) 
             { 
                 a.Dispose();
-                adaptersList.Remove(a);
+                _adaptersList.Remove(a);
                 return true;
             }
+            return false;
+        }
+        internal bool Del_ALL_Adapters()
+        {
+            try
+            {
+                _adaptersList.ForEach(a => a.Dispose());
+                _adaptersList.Clear();
+                return true;
+            }
+            catch {}
             return false;
         }
         private bool Process(string adapterName, char mode)
@@ -146,36 +164,36 @@ namespace isCourseWork
         }*/
         internal void MassInit()
         {
-            adaptersList.ForEach(ad => ad.Init());
+            _adaptersList.ForEach(ad => ad.Init());
         }
         internal void MassCheckCon()
         {
-            adaptersList.ForEach(
+            _adaptersList.ForEach(
                 (Adapter ad) => { ad.CheckCon(); }
                 );
         }
         internal void MassGetBalances() 
         {
-            adaptersList.ForEach( ad => ad.GetBalances() );
+            _adaptersList.ForEach( ad => ad.GetBalances() );
         }
         internal void MassGetPrices()
         {
-            adaptersList.ForEach(
+            _adaptersList.ForEach(
                 (Adapter ad) => { ad.GetPrices(); }
                 );
         }
         internal void MassCalcPortfolio()
         {
-            adaptersList.ForEach(
+            _adaptersList.ForEach(
                 (Adapter ad) => { ad.CalcPortfolio(); }
                 );
         }
         //-------------------------------------------------
-        internal void FillPlatformsAndAssetsNames()
+        /*internal void FillPlatformsAndAssetsNames()
         {
             fillablePlatforms.Clear();
             //adapters.ForEach( (Adapter a) => platforms.Add(a.platformName) );
-            foreach (var adapter in adaptersList)
+            foreach (var adapter in _adaptersList)
             {
                 fillablePlatforms.Add(adapter.platformName);
                 foreach(var dataAsset in adapter.assetList)
@@ -184,7 +202,7 @@ namespace isCourseWork
                 }
             }
 
-        }
+        }*/
       
         internal Dictionary<string, List<DataOneAsset>> RequestEngine(List<string> assets, List<string> adapters)
         {
@@ -193,9 +211,9 @@ namespace isCourseWork
 
             foreach (string anAdapter in adapters)
             {
-                if( adaptersList.Any(ad => ad.platformName.Equals(anAdapter)) )
+                if( _adaptersList.Any(ad => ad.platformName.Equals(anAdapter)) )
                 {
-                    Adapter findedAd = adaptersList.Find( ad => ad.platformName.Equals(anAdapter) );
+                    Adapter findedAd = _adaptersList.Find( ad => ad.platformName.Equals(anAdapter) );
 
                     foreach(string anAsset in assets)
                     {
@@ -216,10 +234,10 @@ namespace isCourseWork
         //-----
         public void Dispose()
         {
-            adaptersList.ForEach( ad => ad.Dispose() );
-            adaptersList.Clear();
-            fillablePlatforms.Clear();
-            fillableAssets.Clear();
+            _adaptersList.ForEach( ad => ad.Dispose() );
+            _adaptersList.Clear();
+            //fillablePlatforms.Clear();
+            //fillableAssets.Clear();
         }
         //-------------------------------------------
     }

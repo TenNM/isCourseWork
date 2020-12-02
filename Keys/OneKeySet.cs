@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace isCourseWork.Keys
 {
+    [Serializable()]
     class OneKeySet
     {
         internal string _platformName;
