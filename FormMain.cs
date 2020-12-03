@@ -16,6 +16,7 @@ namespace isCourseWork
     public partial class FormMain : Form
     {
         internal Adapter_Aggregator adapter_Aggregator = new Adapter_Aggregator();
+        internal Timer timer = new Timer();
         public FormMain()
         {
             InitializeComponent();
@@ -35,7 +36,7 @@ namespace isCourseWork
             //
             dataGridView1.Columns.Add("Adapter name", "Adapter name");
             dataGridView1.Columns.Add("Inited", "Inited");
-            dataGridView1.Columns.Add("Connected", "Connected");
+            dataGridView1.Columns.Add("Connection checked", "Connection checked");
             //
             object[] oArr = {
                 Adapter.ASSET_TEST1,
@@ -54,9 +55,16 @@ namespace isCourseWork
             comboBoxFilter.Items.AddRange(filterArr);
             comboBoxFilter.SelectedIndex = 0;
             //
+            timer.Interval = 1000 * (int)Adapter.requestCooldown;
+            timer.Tick += Timer_Tick;
             StatePass(false);
         }
         //
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            timer.Stop();
+            buttonCallAllServers.Enabled = true;
+        } 
         internal void StatePass(bool isSetted)
         {
             if (!isSetted)
@@ -136,34 +144,9 @@ namespace isCourseWork
             adapter_Aggregator.MassGetPrices();
             adapter_Aggregator.MassCalcPortfolio();
 
-            buttonCallAllServers.Enabled = true;
             buttonFilter.Enabled = true;
+            timer.Start();
         }
-        /*private void buttonFilter_Click(object sender, EventArgs e)
-        {
-            decimal numData = 0;
-            List<string> adapters = checkedListBoxAdapters.CheckedItems.Cast<string>().ToList();
-            List<string> assets = checkedListBoxAssets.CheckedItems.Cast<string>().ToList();
-            var dictionary = adapter_Aggregator.RequestEngine(assets, adapters);
-            chart1.Series[0].Points.Clear();
-            foreach (var entry in dictionary)
-            {
-                foreach (var asset in entry.Value)
-                {
-                    switch (comboBoxFilter.SelectedItem)
-                    {
-                        case "Balance": numData = asset.TotalAssetBalance; break;
-                        case "Price": numData = asset.Price; break;
-                        case "Worth": numData = asset.Worth; break;
-                    }
-                    chart1.Series[0].Points.AddXY(
-                        entry.Key + '\n' + asset.Asset + '\n' + numData,
-                        //asset.TotalAssetBalance
-                        numData
-                        );
-                }
-            }
-        }*/
         private void buttonFilter_Click(object sender, EventArgs e)
         {
             decimal numData = 0;
@@ -185,6 +168,8 @@ namespace isCourseWork
                         case "Price": numData = findedAsset.Price; break;
                         case "Worth": numData = findedAsset.Worth; break;
                     }
+                    if (numData > 1) { numData = decimal.Round(numData, 3); }
+                    else numData = decimal.Round(numData, 8);
                     chart1.Series[0].Points.AddXY(
                         findedAd.platformName + '\n' + findedAsset.Asset + '\n' + numData,
                         numData
