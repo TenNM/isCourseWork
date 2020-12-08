@@ -23,6 +23,8 @@ namespace isCourseWork
             comboBoxChooseAdapter.SelectedIndex = 0;
 
             comboBoxChooseAdapter.Items.AddRange(Adapter.GetSupportedAdapters());
+
+            labeledTextBoxPassword.TextBox.PasswordChar = Properties.Settings.Default.PASSWORD_CHAR;
         }
         private bool isFieldsCorrect()
         {

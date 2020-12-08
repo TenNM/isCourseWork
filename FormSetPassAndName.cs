@@ -18,6 +18,7 @@ namespace isCourseWork
             MinimizeBox = false;
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            labeledTextBoxPass.TextBox.PasswordChar = Properties.Settings.Default.PASSWORD_CHAR;
         }
         private bool isFieldsCorrect()
         {

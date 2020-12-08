@@ -18,6 +18,8 @@ namespace isCourseWork
             MinimizeBox = false;
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.FixedDialog;
+
+            labeledTextBoxDecodePass.TextBox.PasswordChar = Properties.Settings.Default.PASSWORD_CHAR;
         }
         //------------------------------------------------------------------------
         private void buttonDecodeKeySet_Click(object sender, EventArgs e)
