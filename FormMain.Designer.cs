@@ -46,6 +46,7 @@
             this.checkedListBoxAdapters = new System.Windows.Forms.CheckedListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPageAdapters = new System.Windows.Forms.TabPage();
+            this.buttonDecodeKeySet = new System.Windows.Forms.Button();
             this.buttonSetPassAndName = new System.Windows.Forms.Button();
             this.buttonCheckConnAll = new System.Windows.Forms.Button();
             this.buttonInitAll = new System.Windows.Forms.Button();
@@ -54,7 +55,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelName = new System.Windows.Forms.Label();
             this.labelPassSetted = new System.Windows.Forms.Label();
-            this.buttonDecodeKeySet = new System.Windows.Forms.Button();
+            this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPagePortfolio.SuspendLayout();
@@ -68,10 +69,11 @@
             this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.licenseToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -81,20 +83,20 @@
             this.openFileToolStripMenuItem,
             this.saveAsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 32);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(186, 34);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.openFileToolStripMenuItem.Text = "Open file";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(186, 34);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.saveAsToolStripMenuItem.Text = "Save as";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -221,6 +223,16 @@
             this.tabPageAdapters.Text = "Adapters";
             this.tabPageAdapters.UseVisualStyleBackColor = true;
             // 
+            // buttonDecodeKeySet
+            // 
+            this.buttonDecodeKeySet.Location = new System.Drawing.Point(684, 6);
+            this.buttonDecodeKeySet.Name = "buttonDecodeKeySet";
+            this.buttonDecodeKeySet.Size = new System.Drawing.Size(100, 100);
+            this.buttonDecodeKeySet.TabIndex = 6;
+            this.buttonDecodeKeySet.Text = "Decode KeySet";
+            this.buttonDecodeKeySet.UseVisualStyleBackColor = true;
+            this.buttonDecodeKeySet.Click += new System.EventHandler(this.buttonDecodeKeySet_Click);
+            // 
             // buttonSetPassAndName
             // 
             this.buttonSetPassAndName.Location = new System.Drawing.Point(578, 6);
@@ -284,7 +296,7 @@
             // labelName
             // 
             this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(142, 9);
+            this.labelName.Location = new System.Drawing.Point(317, 9);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(84, 20);
             this.labelName.TabIndex = 2;
@@ -293,21 +305,18 @@
             // labelPassSetted
             // 
             this.labelPassSetted.AutoSize = true;
-            this.labelPassSetted.Location = new System.Drawing.Point(314, 9);
+            this.labelPassSetted.Location = new System.Drawing.Point(489, 9);
             this.labelPassSetted.Name = "labelPassSetted";
             this.labelPassSetted.Size = new System.Drawing.Size(116, 20);
             this.labelPassSetted.TabIndex = 3;
             this.labelPassSetted.Text = "labelPassState";
             // 
-            // buttonDecodeKeySet
+            // licenseToolStripMenuItem
             // 
-            this.buttonDecodeKeySet.Location = new System.Drawing.Point(684, 6);
-            this.buttonDecodeKeySet.Name = "buttonDecodeKeySet";
-            this.buttonDecodeKeySet.Size = new System.Drawing.Size(100, 100);
-            this.buttonDecodeKeySet.TabIndex = 6;
-            this.buttonDecodeKeySet.Text = "Decode KeySet";
-            this.buttonDecodeKeySet.UseVisualStyleBackColor = true;
-            this.buttonDecodeKeySet.Click += new System.EventHandler(this.buttonDecodeKeySet_Click);
+            this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(84, 29);
+            this.licenseToolStripMenuItem.Text = "License";
+            this.licenseToolStripMenuItem.Click += new System.EventHandler(this.licenseToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -360,6 +369,7 @@
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.Button buttonDecodeKeySet;
+        private System.Windows.Forms.ToolStripMenuItem licenseToolStripMenuItem;
     }
 }
 

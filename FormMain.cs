@@ -274,7 +274,21 @@ namespace isCourseWork
                 }
             }
         }
+        private void licenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string license =
+                "This program developed only for educational purposes within the course \"Applied computer science in business\" (undergraduate, BSTU) by Ten N.M." + '\n' +
+                "All used libraries belongs to copyright holders:" + '\n' +
+                "- Binance.Net (by JKorf, Nikkozp, CaptHolley)(https://github.com/JKorf/Binance.Net)" + '\n' +
+                "- CryptoExchange.Net (by JKorf)(https://github.com/JKorf/CryptoExchange.Net)" + '\n' +
+                "- EtherscanApi.Net (by Artem Kurianov aka ridicoulous)(https://github.com/ridicoulous/EtherscanApi.Net)" + '\n' +
+                "- Newtonsoft.Json (by James Newton-King)(https://www.newtonsoft.com/json)" + '\n' +
+                "- SuperSocket.ClientEngine.Core(by Kerry Jiang)(http://www.supersocket.net/)" + '\n' +
+                "- WebSocket4Net (by Kerry Jiang)(https://archive.codeplex.com/?p=websocket4net)" +'\n' + '\n' +
+                "You can copy this text using ctrl+c";
 
+           MessageBox.Show(license, "License");
+        }
         //------------------------------------------------------------------------------------end
     }//c
 }//n
