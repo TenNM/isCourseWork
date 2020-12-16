@@ -116,13 +116,19 @@ namespace isCourseWork
                 btcUsdtPrice = binanceClient.GetPrice("BTCUSDT").Data.Price;
                 foreach (var v_asset in assetList)//!!!
                 {
+                    if (v_asset.Asset.Equals(ASSET_BTC))//???????
+                    {
+                        v_asset.Price = btcUsdtPrice;
+                        continue;
+                    }
                     if (v_asset.TotalAssetBalance > minShowableBalance)
                     {
-                        var v_price = binanceClient.GetPrice(v_asset.Asset + "BTC");
-                        if (v_price.Success)
+                        //
+                        var gettedData = binanceClient.GetPrice(v_asset.Asset + "BTC");
+                        if (gettedData.Success)
                         {
                             successAssetsCnt++;
-                            v_asset.Price = v_price.Data.Price;
+                            v_asset.Price = gettedData.Data.Price;
                         }
                         else errorAssetsCnt++;
                     }
@@ -138,6 +144,11 @@ namespace isCourseWork
             decimal sum = 0;
             foreach (var v in assetList)
             {
+                if (v.Asset.Equals(ASSET_BTC))
+                {
+                    v.Worth = v.TotalAssetBalance * btcUsdtPrice;
+                    continue;
+                }
                 v.Worth = v.TotalAssetBalance * v.Price * btcUsdtPrice;
                 sum += v.Worth;
             }

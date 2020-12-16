@@ -24,9 +24,9 @@ namespace isCourseWork
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
 
             chart1.Series[0].ChartType = SeriesChartType.Pie;
-            chart1.Series[0].Points.AddXY("a", 1);
-            chart1.Series[0].Points.AddXY("b", 1);
-            chart1.Series[0].Points.AddXY("c", 1);
+            chart1.Series[0].Points.AddXY("example1", 1);
+            chart1.Series[0].Points.AddXY("example2", 1);
+            chart1.Series[0].Points.AddXY("example3", 1);
             //
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToDeleteRows = false;
