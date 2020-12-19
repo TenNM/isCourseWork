@@ -84,13 +84,6 @@ namespace isCourseWork
         //-------------------------------------------------------------------------------------
         internal bool CellOfFirstColumnSelectedOrNothing()
         {
-            /*if (dataGridView1.SelectedCells.Count != 1) return false;
-            string selectedCellVal = dataGridView1.SelectedCells[0].Value.ToString();
-            foreach(string s in Adapter.GetSupportedAdapters())
-            {
-                if (selectedCellVal.Equals(s)) return true;
-            }
-            return false;*/
             return (dataGridView1.SelectedCells.Count).Equals(0)
                 || (dataGridView1.SelectedCells[0].ColumnIndex.Equals(0));
         }
@@ -239,11 +232,8 @@ namespace isCourseWork
 
             if (openFileDialog.ShowDialog() == DialogResult.OK) //{ return; }
             {
-                //string filePath = openFileDialog1.FileName;
                 if ((stream = openFileDialog.OpenFile()) != null)
                 {
-                    // Code to write the stream goes here.
-                    //FileIOSerializer.loadMk2(ref treeNode, myStream);
                     FileIOSerializer.load(ref loadedKeyStorage, stream);
                     adapter_Aggregator.KeyStorage = loadedKeyStorage;
 

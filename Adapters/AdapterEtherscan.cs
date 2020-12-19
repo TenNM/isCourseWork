@@ -28,7 +28,7 @@ namespace isCourseWork
             if (etherScanClient != null) return true;
             return false;
         }
-        override internal bool CheckCon()//!!!!!!!!!!!!
+        override internal bool CheckCon()
         {
             string url = $"https://api.etherscan.io/api?module=stats&action=ethsupply&apikey={api}";
             string responseString = web.DownloadString(url);
@@ -74,7 +74,6 @@ namespace isCourseWork
         //-----
         private decimal GetPrice()
         {
-            //using (WebClient web = new WebClient())
             try
             {
                 //string url = "https://api.etherscan.io/api?module=stats&action=ethprice&apikey=YourApiKeyToken";

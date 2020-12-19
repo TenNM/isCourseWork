@@ -8,7 +8,6 @@ namespace isCourseWork
 {
     class AdapterTest : Adapter
     {
-        //internal new string platformName = "Test";
         //-------------------------------------------------------------
         internal AdapterTest(string api, string secret)
         {
@@ -30,8 +29,6 @@ namespace isCourseWork
             assetList.Add(new DataOneAsset("TEST1", 10));
             assetList.Add(new DataOneAsset("TEST2", 20));
             assetList.Add(new DataOneAsset("TEST3", 30));
-            //dataPortfolioList.Add(new DataOneAsset("BTC", 100500));
-            //dataPortfolioList.Add(new DataOneAsset("ETH", 9000));
             return true;
         }
         override internal int GetPrices()

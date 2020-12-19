@@ -11,9 +11,6 @@ namespace isCourseWork
     {
         private List<Adapter> _adaptersList = new List<Adapter>();
 
-        //internal List<string> fillablePlatforms = new List<string>();
-        //internal List<string> fillableAssets = new List<string>();
-
         private Keys.KeyStorage _keyStorage = new Keys.KeyStorage();
         internal Keys.KeyStorage KeyStorage
         {
@@ -34,7 +31,6 @@ namespace isCourseWork
                 ad => ad.platformName.Equals(adapterName)
                 );
         }
-        //internal List<string> GetAdapterNames
         //---------------------------------------------------------------------KeyStorage
         internal void KeyStorageSetName(string name)
         {
@@ -68,7 +64,7 @@ namespace isCourseWork
         internal void LoadKeyStorageFrFile(Stream stream)
         {
             FileIOSerializer.load(ref _keyStorage, stream);
-        }//!!!!!!
+        }
         internal void SaveKeyStorageToFile(Stream stream)
         {
             FileIOSerializer.save(_keyStorage, stream);
@@ -155,13 +151,6 @@ namespace isCourseWork
             return false;
         }
         //-------------------------------------------
-        /*internal void MassAddAdapters()//add new adapters here
-        {
-            foreach(Keys.OneKeySet oks in _keyStorage._keySetList)
-            {
-
-            }
-        }*/
         internal void MassInit()
         {
             _adaptersList.ForEach(ad => ad.Init());
@@ -189,21 +178,6 @@ namespace isCourseWork
                 );
         }
         //-------------------------------------------------
-        /*internal void FillPlatformsAndAssetsNames()
-        {
-            fillablePlatforms.Clear();
-            //adapters.ForEach( (Adapter a) => platforms.Add(a.platformName) );
-            foreach (var adapter in _adaptersList)
-            {
-                fillablePlatforms.Add(adapter.platformName);
-                foreach(var dataAsset in adapter.assetList)
-                {
-                    fillableAssets.Add(dataAsset.Asset);
-                }
-            }
-
-        }*/
-      
         internal Dictionary<string, List<DataOneAsset>> RequestEngine(List<string> assets, List<string> adapters)
         {
             Dictionary<string, List<DataOneAsset>> res = new Dictionary<string, List<DataOneAsset>>();
@@ -236,8 +210,6 @@ namespace isCourseWork
         {
             _adaptersList.ForEach( ad => ad.Dispose() );
             _adaptersList.Clear();
-            //fillablePlatforms.Clear();
-            //fillableAssets.Clear();
         }
         //-------------------------------------------
     }

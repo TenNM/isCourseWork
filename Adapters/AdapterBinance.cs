@@ -6,9 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-//maybe add time of last data updates?
-//maybe fork GetBalaces to GetPlatformActives and GetBalaces[only]
-
 namespace isCourseWork
 {
     internal class AdapterBinance : Adapter
@@ -43,11 +40,6 @@ namespace isCourseWork
         }
         override internal bool CheckCon()
         {
-            /*using (var client = new BinanceClient())
-            {
-                var check = client.Ping();
-                return check.Success;
-            }*/
             try
             {
                 var check = binanceClient.Ping();
@@ -61,19 +53,7 @@ namespace isCourseWork
         override internal bool GetBalances()
         {
             assetList.Clear();
-            /*using (var client = new BinanceClient())
-            {
-                var accInfo = client.GetAccountInfo();
-                //---
-                if (!accInfo.Success) return false;
-                //---
-                var balances = accInfo.Data.Balances;
-                foreach (var v in balances)
-                {
-                    dataPortfolioList.Add(new DataOneAsset(v.Asset, v.Total, 0, 0));//-1?
-                }
-                return accInfo.Success;
-            }*/
+
             try
             {
                 var accInfo = binanceClient.GetAccountInfo();
@@ -93,24 +73,7 @@ namespace isCourseWork
         {
             int successAssetsCnt = 0;
             int errorAssetsCnt = 0;
-            /*using (var client = new BinanceClient())
-            {
-                btcUsdtPrice = client.GetPrice("BTCUSDT").Data.Price;
-                foreach(var v_asset in dataPortfolioList)//!!!
-                {
-                    if(v_asset.TotalAssetBalance > minShowableBalance)
-                    {
-                        var v_price = client.GetPrice(v_asset.Asset + "BTC");
-                        if (v_price.Success)
-                        {
-                            successAssetsCnt++;
-                            v_asset.Price = v_price.Data.Price;
-                        }
-                        else errorAssetsCnt++;
-                    }
-                    //else
-                }
-            }*/
+  
             try
             {
                 btcUsdtPrice = binanceClient.GetPrice("BTCUSDT").Data.Price;
@@ -132,7 +95,7 @@ namespace isCourseWork
                         }
                         else errorAssetsCnt++;
                     }
-                    //else
+                    
                 }
             }
             catch { }

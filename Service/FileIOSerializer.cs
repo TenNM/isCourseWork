@@ -24,10 +24,7 @@ namespace isCourseWork
             {
                 binFormatter.Serialize(fs, saveableObj);
             }
-            catch(Exception e) { //throw new System.Exception(SAVE_ERR);
-                var v = e.Message;
-                int i = 0;
-            }
+            catch { throw new System.Exception(SAVE_ERR); }
         }
         //--------------------------------------------------------------------------
         internal static void load<T>(ref T loadableObj, string path) where T : class

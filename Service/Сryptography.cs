@@ -28,7 +28,6 @@ namespace isCourseWork
                 pass += baseIV[i];
             }
             pass = pass.Substring(0, 16);
-            //Console.WriteLine("ps " + pass + "\npl " + pass.Length);//debug
             return Encoding.ASCII.GetBytes(pass);
         }
         //-------------------------------------------------------------
@@ -36,8 +35,6 @@ namespace isCourseWork
         {
             long secUnix = DateTimeOffset.UtcNow.ToUnixTimeSeconds();//10 chars
             Random rand = new Random();
-            /*int start = rand.Next(3, 13);
-            int length = rand.Next(13, 23);*/
             int start = rand.Next(0, 3);
             int length = rand.Next(13, 23);
 
@@ -46,35 +43,6 @@ namespace isCourseWork
                 TRASH.GetHashCode().ToString() + 
                 (secUnix+33).ToString()
                 ).Substring(start, length);
-        }
-        //------------------------------------------------------
-        internal static void Test()
-        {
-            string original = "Here is some data to encrypt!";
-            Console.WriteLine("o: {0}", original);
-
-            // Create a new instance of the Aes
-            // class.  This generates a new key and initialization
-            // vector (IV).
-            using (Aes myAes = Aes.Create())
-            {
-
-                // Encrypt the string to an array of bytes.
-                byte[] encrypted = EncryptStringToBytes_Aes(original, myAes.Key, myAes.IV);
-                string k = "";
-                foreach (var v in encrypted)//
-                {
-                    k += v;
-                }
-                Console.WriteLine("e: {0}", k);
-
-                // Decrypt the bytes to a string.
-                string roundtrip = DecryptStringFromBytes_Aes(encrypted, myAes.Key, myAes.IV);
-
-                //Display the original data and the decrypted data.
-                //Console.WriteLine("Original:   {0}", original);
-                Console.WriteLine("r: {0}", roundtrip);
-            }
         }
         //------------------------------------------------------------------------------
         internal static byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
@@ -177,13 +145,6 @@ namespace isCourseWork
             return DecryptStringFromBytes_Aes(cipherText, baseKey, baseIV);
         }
         //---------------------------------------------------------------------------
-        /*internal static string GetMD5(string inputStr)
-        {
-            inputStr = SALT + inputStr + SALT;
-            MD5 md5 = MD5.Create();
-            byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(inputStr));
-            return Convert.ToBase64String(hash);
-        }*/
         internal static byte[] GetSha512(string inputStr)
         {
             inputStr = SALT + inputStr + SALT;
